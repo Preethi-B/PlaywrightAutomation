@@ -23,4 +23,14 @@ test('locate the error message on invalid login', async ({ page }) => {
   await expect(error).toBeVisible();
   await expect(error).toHaveText('Incorrect username/password.');
 });
+
+test.only('explicit waitForSelector when you need the element before doing more than asserting', async ({ page }) => {
+  await page.locator('#username').fill('wrongUser');
+  await page.locator('#password').fill('wrongPass');
+  await page.locator('#signInBtn').click();
+
+  await page.waitForSelector('.alert-danger', { state: 'visible' });
+  const errorText = await page.locator('.alert-danger').textContent();
+  expect(errorText?.trim()).toBe('Incorrect username/password.');
+});
 })

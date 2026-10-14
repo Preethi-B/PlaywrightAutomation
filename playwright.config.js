@@ -1,24 +1,18 @@
-// @ts-check
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
-
-
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
-const config ={
+export default defineConfig({
   testDir: './tests',
- timeout : 30 * 1000,
-  expect: {
-    timeout:5000
-    
-},
-reporter: 'html',
-use : {
-  browserName : 'chromium',
-  headless : false,
-},
-
-};
-
-module.exports = config
+  timeout: 30000,
+  retries: 0,
+  use: {
+    baseURL: 'https://rahulshettyacademy.com/angularpractice',
+    headless: true,
+    screenshot: 'only-on-failure',
+  },
+  projects: [
+    {
+      name: 'chromium',
+      use: { browserName: 'chromium' },
+    },
+  ],
+});
